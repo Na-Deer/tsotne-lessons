@@ -1,6 +1,12 @@
 ## Homework 2
 
-Given a matrix of A and a matrix of B, write matrix multiplication function
+Given a matrix of A and a matrix of B, write matrix multiplication function. Once the program is compiled I should be able to input the sizes of matrices.
+So program should be runnable in the following way:
+
+./program_name 100 300 300 20
+
+which will result in me getting [100, 20] matrix in the end. If matrices are non-conformable, then program should print, "cant multiply matrices with these shapes"
+
 
 Example:
 
