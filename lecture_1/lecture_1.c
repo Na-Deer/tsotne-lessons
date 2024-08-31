@@ -35,7 +35,7 @@ void showoff_conditionals(int a, int b){
         printf("LESS THAN 50\n");
     }
 
-    // and statement
+    // and statement  
     if (a > 100 && b < 150){
         printf("SOMETHING!\n");
     }
