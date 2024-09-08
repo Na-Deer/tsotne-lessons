@@ -10,14 +10,14 @@ int* allocate_array(int numel){
 
 
 int random_int(){
-    /*
+    
     int min = 1;
-    int max = 1;
+    int max = 10;
 
     return rand() % (max + 1);
-    */
+    
 
-    return 1; 
+    //return 1; 
 }
 
 
@@ -62,12 +62,12 @@ int matrice_single_multiplier( int* m_1, int matr_1_row_num, int matr_1stride,
                              ){
 
     
-    int* multiplication = allocate_array(numel^2);
+    int* multiplication = allocate_array(numel);
 
     for( int i = 0; i < numel; i++){
         multiplication[i] = m_1[ i + ((matr_1_row_num - 1) * matr_1stride)]
                             *
-                            m_2[matr_2_col_num + i * matr_2stride];
+                            m_2[matr_2_col_num + i * matr_2stride - 1];
                                           
     };
 
@@ -91,19 +91,20 @@ int * matrice_multiplier( int* m_1, int m_1a, int m_1b, int matr_1stride,
                 
                 int* final_matrice = allocate_array(numel);    
 
-    for(int i = 0; i< numel; i++ ){
+    for(int i = 0; i < numel; i++ ){
 
-        int row_num = i / matr_1stride + 1;
-        int col_num = i % matr_2stride;
+        int row_num = (i / matr_2stride ) + 1;
+        int col_num = i % matr_2stride + 1;
 
 
         final_matrice[i] = matrice_single_multiplier(m_1, row_num, matr_1stride,
                                                      m_2, col_num, matr_2stride, m_1b);
         ;
 
-        return final_matrice;
         
     }
+
+    return final_matrice;
 }
 
 
@@ -116,11 +117,11 @@ int main(){
 
     srand(time(NULL));
 
-    int m_1a = 3;
-    int m_1b = 4;
+    int m_1a = 1;
+    int m_1b = 1;
 
-    int m_2a = 4;
-    int m_2b = 2;
+    int m_2a = 1;
+    int m_2b = 1;
 
     int m_1_total_num = m_1a * m_1b;
     int m_2_total_num = m_2a * m_2b;
@@ -156,9 +157,73 @@ int main(){
                                               m_2, m_2a, m_2b, m_2_stride);
 
     print_matrice(output_array, m_1a * m_2b, m_2b);
-                                    
+
+    free(output_array);
+
+
+
+
+
+    int check = 6;
+
+    int row = (check / m_2_stride) + 1;
+
+    int col = check % m_2_stride + 1;
+
+    printf( " row is %i\n", row);
+    printf( " col is %i\n", col);
+
+    printf( "multiply is %i\n",
+    matrice_single_multiplier(m_1, row, m_1_stride,
+                              m_2, col, m_2_stride, m_1b)
+    );
+
+
+    printf("%i\n", m_1a * m_2b);
+
+
+
+    int numel = m_1b;
+
+    int matr_1_row_num = row;
+    int matr_2_col_num = col;
+
+    int matr_1stride = m_1_stride;
+    int matr_2stride = m_2_stride;
+    
+    int* multiplication = allocate_array(numel);
+
+    for( int i = 0; i < numel; i++){
+        multiplication[i] = m_1[ i + ((matr_1_row_num - 1) * matr_1stride)]
+                            *
+                            m_2[matr_2_col_num + i * matr_2stride - 1];
+                                          
+    };
+
+
+
+
+
+    int multiplication_summed = 0;
+
+    for (int i = 0; i < numel; i++){
+        multiplication_summed += multiplication[i];
+    };
+
+    print_array(multiplication, numel);
+
+    printf("print %i\n", m_1[3 + ((1 - 1) * matr_1stride)]);
+
+    printf("print %i\n", m_2[7]);
+
+    printf("mult is %i\n", multiplication_summed);
+
+    //free(multiplication);
 
     free(m_1);
     free(m_2);
     free(m_output);
+
+
+
 }
